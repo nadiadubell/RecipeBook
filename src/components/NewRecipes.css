@@ -1,0 +1,42 @@
+#recipe-form {
+  margin-left: 10px;
+  color: darkgray;
+}
+
+#new-recipe {
+  display: block;
+  font-family: sans-serif;
+  margin-bottom: 5px;
+  color: black;
+}
+
+#recipe-title {
+  display: block;
+  font-family: sans-serif;
+  margin-bottom: 5px;
+  padding: 5px;
+  width: 250px;
+}
+
+#recipe-instructions {
+  display: block;
+  font-family: sans-serif;
+  margin-bottom: 5px;
+  padding: 5px;
+  width: 250px;
+}
+
+#add-recipe {
+  background-color: lightskyblue;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  width: 100px;
+  margin-top: 5px;
+}
+
+#add-recipe:hover {
+  cursor: pointer;
+  background-color: darkblue;
+  color: white;
+}
