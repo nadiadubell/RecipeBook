@@ -53,3 +53,9 @@
   width: 100px;
   margin-bottom: 10px;
 }
+
+#save-button:hover {
+  cursor: pointer;
+  background-color: darksalmon;
+  color: white;
+}

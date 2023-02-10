@@ -10,10 +10,10 @@ interface RecipesProps {
 
   onDeleteRecipe: (id: number) => void;
   onEditRecipe: (id: number, title: string, instructions: string) => void;
-  newTitle: string;
-  newInstructions: string;
   setNewTitle: (newTitle: string) => void;
   setNewInstructions: (newInstructions: string) => void;
+  newTitle: string;
+  newInstructions: string;
 }
 
 const Recipe: React.FC<RecipesProps> = (props) => {
