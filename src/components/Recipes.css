@@ -24,6 +24,38 @@
 
 #delete-recipe:hover {
   cursor: pointer;
-  background-color: darkblue;
+  background-color: skyblue;
+  color: white;
+}
+
+#edit-recipe {
+  background-color: lightsalmon;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+#edit-recipe:hover {
+  cursor: pointer;
+  background-color: darksalmon;
+  color: white;
+}
+
+#save-button {
+  background-color: lightsalmon;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+#save-button:hover {
+  cursor: pointer;
+  background-color: darksalmon;
   color: white;
 }

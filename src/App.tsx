@@ -13,6 +13,9 @@ const App: React.FC = () => {
     },
   ]);
 
+  const [newRecipeTitle, setNewRecipeTitle] = useState("");
+  const [newRecipeInstructs, setNewRecipeInstructs] = useState("");
+
   const recipeAddHandler = (title: string, instructions: string) => {
     setNewRecipes((prevRecipes) => [
       ...prevRecipes,
@@ -26,11 +29,36 @@ const App: React.FC = () => {
     });
   };
 
+  const recipeEditHandler = (
+    id: number,
+    title: string,
+    instructions: string
+  ) => {
+    const updatedRecipes = newRecipes.map((recipe) => {
+      if (recipe.id === id) {
+        return { ...recipe, title, instructions };
+      }
+      return recipe;
+    });
+
+    setNewRecipes(updatedRecipes);
+    setNewRecipeTitle("");
+    setNewRecipeInstructs("");
+  };
+
   return (
     <div className="App">
       <h1 id="site-title">Recipe Book</h1>
       <NewRecipe onAddRecipe={recipeAddHandler} />
-      <Recipes items={newRecipes} onDeleteRecipe={recipeDeleteHandler} />
+      <Recipes
+        onDeleteRecipe={recipeDeleteHandler}
+        onEditRecipe={recipeEditHandler}
+        setNewTitle={setNewRecipeTitle}
+        setNewInstructions={setNewRecipeInstructs}
+        items={newRecipes}
+        newTitle={newRecipeTitle}
+        newInstructions={newRecipeInstructs}
+      />
     </div>
   );
 };
