@@ -51,13 +51,13 @@ const App: React.FC = () => {
       <h1 id="site-title">Recipe Book</h1>
       <NewRecipe onAddRecipe={recipeAddHandler} />
       <Recipes
-        items={newRecipes}
         onDeleteRecipe={recipeDeleteHandler}
         onEditRecipe={recipeEditHandler}
-        newTitle={newRecipeTitle}
-        newInstructions={newRecipeInstructs}
         setNewTitle={setNewRecipeTitle}
         setNewInstructions={setNewRecipeInstructs}
+        items={newRecipes}
+        newTitle={newRecipeTitle}
+        newInstructions={newRecipeInstructs}
       />
     </div>
   );
