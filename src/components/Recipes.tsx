@@ -88,12 +88,12 @@ const Recipe: React.FC<RecipesProps> = (props) => {
             >
               Edit
             </button>
-            {showForm ? (
+            {showForm && currentRecipe && currentRecipe.id === recipe.id ? (
               <form onSubmit={(event) => recipeSumbitHandler(recipe.id, event)}>
                 Title:
                 <input
                   id="recipe-title"
-                  defaultValue={newTitle}
+                  defaultValue={currentRecipe ? currentRecipe.title : newTitle}
                   ref={titleInputRef}
                   onChange={onTitleChange}
                 />
@@ -101,12 +101,23 @@ const Recipe: React.FC<RecipesProps> = (props) => {
                 but You can add more steps if needed)
                 <input
                   id="recipe-instructions"
-                  defaultValue={newInstructions}
+                  defaultValue={
+                    currentRecipe ? currentRecipe.instructions : newInstructions
+                  }
                   ref={instructionsInputRef}
                   onChange={onInstructionsChange}
                 />
                 <button id="save-button" type="submit">
                   Save
+                </button>
+                <button
+                  id="cancel-button"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setShowForm(false);
+                  }}
+                >
+                  Cancel
                 </button>
               </form>
             ) : null}

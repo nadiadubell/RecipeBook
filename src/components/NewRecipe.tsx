@@ -8,16 +8,18 @@ type onAddRecipe = {
 const NewRecipe: React.FC<onAddRecipe> = (props) => {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const instructionsInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const recipeSumbitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    const recipeTitle = titleInputRef.current!.value;
-    const recipeInstructions = instructionsInputRef.current!.value;
+    let recipeTitle = titleInputRef.current!.value;
+    let recipeInstructions = instructionsInputRef.current!.value;
     props.onAddRecipe(recipeTitle, recipeInstructions);
+    formRef.current!.reset();
   };
 
   return (
-    <form id="recipe-form" onSubmit={recipeSumbitHandler}>
+    <form ref={formRef} id="recipe-form" onSubmit={recipeSumbitHandler}>
       <div>
         <label id="new-recipe" htmlFor="new-recipe">
           New Recipe
