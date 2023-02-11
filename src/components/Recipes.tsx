@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
+import { recipeList } from "../Recipe.model";
 import "./Recipes.css";
 
-interface RecipesProps {
+interface RecipeProps {
   items: {
     id: number;
     title: string;
+    ingredients: string;
     instructions: string;
   }[];
 
@@ -12,11 +14,12 @@ interface RecipesProps {
   onEditRecipe: (id: number, title: string, instructions: string) => void;
   setNewTitle: (newTitle: string) => void;
   setNewInstructions: (newInstructions: string) => void;
+  setItems: (value: recipeList[]) => void;
   newTitle: string;
   newInstructions: string;
 }
 
-const Recipe: React.FC<RecipesProps> = (props) => {
+const Recipe: React.FC<RecipeProps> = (props) => {
   const {
     newTitle,
     newInstructions,
@@ -28,7 +31,7 @@ const Recipe: React.FC<RecipesProps> = (props) => {
   } = props;
   const [showForm, setShowForm] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState<
-    RecipesProps["items"][0] | null
+    RecipeProps["items"][0] | null
   >(null);
 
   const titleInputRef = useRef<HTMLInputElement>(null);
@@ -40,6 +43,10 @@ const Recipe: React.FC<RecipesProps> = (props) => {
       setNewInstructions(currentRecipe.instructions);
     }
   }, [currentRecipe, setNewTitle, setNewInstructions]);
+
+  useEffect(() => {
+    localStorage.setItem("recipe", JSON.stringify(items));
+  }, [items]);
 
   const recipeSumbitHandler = (id: number, event: React.FormEvent) => {
     event.preventDefault();
@@ -57,19 +64,28 @@ const Recipe: React.FC<RecipesProps> = (props) => {
     setNewInstructions(event.target.value);
   };
 
-  return (
+  return items.length ? (
     <div id="recipes-container">
       {items.map((recipe) => {
         return (
           <div key={recipe.id}>
             <span>
               <h3 id="recipe-title">{recipe.title}</h3>
-              <div id="recipe-instructions">
-                {recipe.instructions.split(" ").map((instruction, index) => (
-                  <p key={index}>
-                    {instruction}
+              <div id="recipe-ingredients">
+                <h4>Ingredients:</h4>
+                {recipe.ingredients.split(",").map((ingredient, index) => (
+                  <ul key={index}>
+                    <li id="ingredient">{ingredient}</li>
                     <br />
-                  </p>
+                  </ul>
+                ))}
+              </div>
+              <div id="recipe-instructions">
+                {recipe.instructions.split(", ").map((instruction, index) => (
+                  <div key={index}>
+                    <p>{instruction}</p>
+                    <br />
+                  </div>
                 ))}
               </div>
             </span>
@@ -124,6 +140,10 @@ const Recipe: React.FC<RecipesProps> = (props) => {
           </div>
         );
       })}
+    </div>
+  ) : (
+    <div id="recipes-container">
+      <h3>No Recipes Found</h3>
     </div>
   );
 };

@@ -5,22 +5,26 @@ import { recipeList } from "./Recipe.model";
 import "./App.css";
 
 const App: React.FC = () => {
-  const [newRecipes, setNewRecipes] = useState<recipeList[]>([
-    {
-      id: 1,
-      title: "Pizza",
-      instructions: `1.ahiohdhihihi 2.ahidhihihgihi 3.adiohoiihihihi`,
-    },
-  ]);
+  const [newRecipes, setNewRecipes] = useState<recipeList[]>([]);
 
   const [newRecipeTitle, setNewRecipeTitle] = useState("");
   const [newRecipeInstructs, setNewRecipeInstructs] = useState("");
 
-  const recipeAddHandler = (title: string, instructions: string) => {
+  const recipeAddHandler = (
+    title: string,
+    ingredients: string,
+    instructions: string
+  ) => {
     setNewRecipes((prevRecipes) => [
       ...prevRecipes,
-      { id: Math.random(), title: title, instructions: instructions },
+      {
+        id: Math.random(),
+        title: title,
+        ingredients: ingredients,
+        instructions: instructions,
+      },
     ]);
+    return [...newRecipes];
   };
 
   const recipeDeleteHandler = (id: number) => {
@@ -55,6 +59,7 @@ const App: React.FC = () => {
         onEditRecipe={recipeEditHandler}
         setNewTitle={setNewRecipeTitle}
         setNewInstructions={setNewRecipeInstructs}
+        setItems={setNewRecipes}
         items={newRecipes}
         newTitle={newRecipeTitle}
         newInstructions={newRecipeInstructs}

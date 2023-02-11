@@ -2,19 +2,32 @@ import React, { useRef } from "react";
 import "./NewRecipes.css";
 
 type onAddRecipe = {
-  onAddRecipe: (recipeTitle: string, recipeInstructions: string) => void;
+  onAddRecipe: (
+    recipeTitle: string,
+    recipeIngredients: string,
+    recipeInstructions: string
+  ) => object;
 };
 
 const NewRecipe: React.FC<onAddRecipe> = (props) => {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const instructionsInputRef = useRef<HTMLInputElement>(null);
+  const ingredientsInputRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const recipeSumbitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    let recipeTitle = titleInputRef.current!.value;
-    let recipeInstructions = instructionsInputRef.current!.value;
-    props.onAddRecipe(recipeTitle, recipeInstructions);
+    const recipeTitle = titleInputRef.current!.value;
+    const recipeInstructions = instructionsInputRef.current!.value;
+    const recipeIngredients = ingredientsInputRef.current!.value;
+    const recipe = props.onAddRecipe(
+      recipeTitle,
+      recipeIngredients,
+      recipeInstructions
+    );
+    if (recipe) {
+      localStorage.setItem("recipe", JSON.stringify(recipe));
+    }
     formRef.current!.reset();
   };
 
@@ -31,8 +44,13 @@ const NewRecipe: React.FC<onAddRecipe> = (props) => {
           placeholder="Recipe Title"
           required
         />
-        Instructions: (please enter exactly as shown in the placeholder but You
-        can add more steps if needed)
+        Indgredients (please separate with commas)
+        <textarea
+          id="recipe-ingredients"
+          ref={ingredientsInputRef}
+          placeholder="ingredient,ingredient,ingredient"
+        ></textarea>
+        Instructions: (please separate with commas)
         <input
           id="recipe-instructions"
           ref={instructionsInputRef}
