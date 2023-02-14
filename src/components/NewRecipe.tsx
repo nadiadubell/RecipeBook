@@ -6,7 +6,7 @@ type onAddRecipe = {
     recipeTitle: string,
     recipeIngredients: string,
     recipeInstructions: string
-  ) => object;
+  ) => void;
 };
 
 const NewRecipe: React.FC<onAddRecipe> = (props) => {
@@ -15,24 +15,20 @@ const NewRecipe: React.FC<onAddRecipe> = (props) => {
   const ingredientsInputRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const recipeSumbitHandler = (event: React.FormEvent) => {
+  const recipeSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    const recipeTitle = titleInputRef.current!.value;
-    const recipeInstructions = instructionsInputRef.current!.value;
-    const recipeIngredients = ingredientsInputRef.current!.value;
-    const recipe = props.onAddRecipe(
-      recipeTitle,
-      recipeIngredients,
-      recipeInstructions
-    );
-    if (recipe) {
-      localStorage.setItem("recipe", JSON.stringify(recipe));
-    }
+    const recipe = {
+      title: titleInputRef.current!.value,
+      ingredients: ingredientsInputRef.current!.value,
+      instructions: instructionsInputRef.current!.value,
+    };
+
+    props.onAddRecipe(recipe.title, recipe.ingredients, recipe.instructions);
     formRef.current!.reset();
   };
 
   return (
-    <form ref={formRef} id="recipe-form" onSubmit={recipeSumbitHandler}>
+    <form ref={formRef} id="recipe-form" onSubmit={recipeSubmitHandler}>
       <div>
         <label id="new-recipe" htmlFor="new-recipe">
           New Recipe
@@ -57,9 +53,7 @@ const NewRecipe: React.FC<onAddRecipe> = (props) => {
           placeholder="1.ahihodih 2.ashdaohgih 3.ahdihogh"
           required
         />
-        <button id="add-recipe" type="submit">
-          Add Recipe
-        </button>
+        <button type="submit">Add Recipe</button>
       </div>
     </form>
   );

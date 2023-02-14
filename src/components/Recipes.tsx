@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { recipeList } from "../Recipe.model";
 import "./Recipes.css";
 
 interface RecipeProps {
@@ -11,23 +10,31 @@ interface RecipeProps {
   }[];
 
   onDeleteRecipe: (id: number) => void;
-  onEditRecipe: (id: number, title: string, instructions: string) => void;
+  onEditRecipe: (
+    id: number,
+    title: string,
+    ingredients: string,
+    instructions: string
+  ) => void;
   setNewTitle: (newTitle: string) => void;
   setNewInstructions: (newInstructions: string) => void;
-  setItems: (value: recipeList[]) => void;
+  setNewIngredients: (newIngredients: string) => void;
   newTitle: string;
   newInstructions: string;
+  newIngredients: string;
 }
 
 const Recipe: React.FC<RecipeProps> = (props) => {
   const {
     newTitle,
     newInstructions,
+    newIngredients,
     items,
     onDeleteRecipe,
     onEditRecipe,
     setNewInstructions,
     setNewTitle,
+    setNewIngredients,
   } = props;
   const [showForm, setShowForm] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState<
@@ -36,23 +43,22 @@ const Recipe: React.FC<RecipeProps> = (props) => {
 
   const titleInputRef = useRef<HTMLInputElement>(null);
   const instructionsInputRef = useRef<HTMLInputElement>(null);
+  const ingredientsInputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (currentRecipe) {
       setNewTitle(currentRecipe.title);
       setNewInstructions(currentRecipe.instructions);
+      setNewIngredients(currentRecipe.ingredients);
     }
-  }, [currentRecipe, setNewTitle, setNewInstructions]);
-
-  useEffect(() => {
-    localStorage.setItem("recipe", JSON.stringify(items));
-  }, [items]);
+  }, [currentRecipe, setNewTitle, setNewInstructions, setNewIngredients]);
 
   const recipeSumbitHandler = (id: number, event: React.FormEvent) => {
     event.preventDefault();
     const newTitle = titleInputRef.current!.value;
     const newInstructions = instructionsInputRef.current!.value;
-    onEditRecipe(id, newTitle, newInstructions);
+    const newIngredients = ingredientsInputRef.current!.value;
+    onEditRecipe(id, newTitle, newIngredients, newInstructions);
     setShowForm(false);
   };
 
@@ -64,7 +70,13 @@ const Recipe: React.FC<RecipeProps> = (props) => {
     setNewInstructions(event.target.value);
   };
 
-  return items.length ? (
+  const onIngredientsChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setNewIngredients(event.target.value);
+  };
+
+  return items ? (
     <div id="recipes-container">
       {items.map((recipe) => {
         return (
@@ -73,20 +85,22 @@ const Recipe: React.FC<RecipeProps> = (props) => {
               <h3 id="recipe-title">{recipe.title}</h3>
               <div id="recipe-ingredients">
                 <h4>Ingredients:</h4>
-                {recipe.ingredients.split(",").map((ingredient, index) => (
-                  <ul key={index}>
-                    <li id="ingredient">{ingredient}</li>
-                    <br />
-                  </ul>
-                ))}
+                {recipe.ingredients &&
+                  recipe.ingredients.split(",").map((ingredient, index) => (
+                    <ul key={index}>
+                      <li id="ingredient">{ingredient}</li>
+                      <br />
+                    </ul>
+                  ))}
               </div>
               <div id="recipe-instructions">
-                {recipe.instructions.split(", ").map((instruction, index) => (
-                  <div key={index}>
-                    <p>{instruction}</p>
-                    <br />
-                  </div>
-                ))}
+                {recipe.instructions &&
+                  recipe.instructions.split(", ").map((instruction, index) => (
+                    <div key={index}>
+                      <p>{instruction}</p>
+                      <br />
+                    </div>
+                  ))}
               </div>
             </span>
             <button
@@ -113,8 +127,16 @@ const Recipe: React.FC<RecipeProps> = (props) => {
                   ref={titleInputRef}
                   onChange={onTitleChange}
                 />
-                Instructions: (please enter exactly as shown in the placeholder
-                but You can add more steps if needed)
+                Ingredients: (please separate by commas)
+                <textarea
+                  id="recipe-ingredients"
+                  defaultValue={
+                    currentRecipe ? currentRecipe.ingredients : newIngredients
+                  }
+                  ref={ingredientsInputRef}
+                  onChange={onIngredientsChange}
+                ></textarea>
+                Instructions: (please separate by commas)
                 <input
                   id="recipe-instructions"
                   defaultValue={
@@ -142,9 +164,7 @@ const Recipe: React.FC<RecipeProps> = (props) => {
       })}
     </div>
   ) : (
-    <div id="recipes-container">
-      <h3>No Recipes Found</h3>
-    </div>
+    <div>No recipes found</div>
   );
 };
 
