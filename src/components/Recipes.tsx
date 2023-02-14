@@ -1,6 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Recipes.css";
 
+type ImageMap = {
+  [id: number]: any;
+};
+
+const imageMap: ImageMap = {
+  0.8789811193145856: require("../pics/recipe1.jpg"),
+  0.7722502051511897: require("../pics/recipe2.jpg"),
+};
+
 interface RecipeProps {
   items: {
     id: number;
@@ -80,56 +89,65 @@ const Recipe: React.FC<RecipeProps> = (props) => {
     <div id="recipes-container">
       {items.map((recipe) => {
         return (
-          <div key={recipe.id}>
-            <span>
-              <h3 id="recipe-title">{recipe.title}</h3>
-              <div id="recipe-ingredients">
-                <h4>Ingredients:</h4>
-                {recipe.ingredients &&
-                  recipe.ingredients.split(",").map((ingredient, index) => (
-                    <ul key={index}>
-                      <li id="ingredient">{ingredient}</li>
-                      <br />
-                    </ul>
-                  ))}
+          <div key={recipe.id} id="recipe-container">
+            <span id="recipe-info-container">
+              <div id="recipe-info-pic">
+                <img src={imageMap[recipe.id]} alt={recipe.title} />
               </div>
-              <div id="recipe-instructions">
-                {recipe.instructions &&
-                  recipe.instructions.split(", ").map((instruction, index) => (
-                    <div key={index}>
-                      <p>{instruction}</p>
-                      <br />
-                    </div>
-                  ))}
+              <div id="recipe-info-text">
+                <h3 id="recipe-title">{recipe.title}</h3>
+                <div id="recipe-ingredients">
+                  <h4>Ingredients:</h4>
+                  {recipe.ingredients &&
+                    recipe.ingredients.split(",").map((ingredient, index) => (
+                      <ul key={index}>
+                        <li id="ingredient">{ingredient}</li>
+                        <br />
+                      </ul>
+                    ))}
+                </div>
+                <div id="recipe-instructions">
+                  {recipe.instructions &&
+                    recipe.instructions
+                      .split(", ")
+                      .map((instruction, index) => (
+                        <div key={index}>
+                          <p>{instruction}</p>
+                          <br />
+                        </div>
+                      ))}
+                </div>
               </div>
             </span>
-            <button
-              id="delete-recipe"
-              onClick={onDeleteRecipe.bind(null, recipe.id)}
-            >
-              Delete
-            </button>
-            <button
-              id="edit-recipe"
-              onClick={() => {
-                setCurrentRecipe(recipe);
-                setShowForm(true);
-              }}
-            >
-              Edit
-            </button>
+            <span id="buttons-container">
+              <button
+                id="delete-recipe"
+                onClick={onDeleteRecipe.bind(null, recipe.id)}
+              >
+                Delete
+              </button>
+              <button
+                id="edit-recipe"
+                onClick={() => {
+                  setCurrentRecipe(recipe);
+                  setShowForm(true);
+                }}
+              >
+                Edit
+              </button>
+            </span>
             {showForm && currentRecipe && currentRecipe.id === recipe.id ? (
               <form onSubmit={(event) => recipeSumbitHandler(recipe.id, event)}>
                 Title:
                 <input
-                  id="recipe-title"
+                  id="recipe-title-input"
                   defaultValue={currentRecipe ? currentRecipe.title : newTitle}
                   ref={titleInputRef}
                   onChange={onTitleChange}
                 />
                 Ingredients: (please separate by commas)
                 <textarea
-                  id="recipe-ingredients"
+                  id="recipe-ingredients-input"
                   defaultValue={
                     currentRecipe ? currentRecipe.ingredients : newIngredients
                   }
@@ -138,7 +156,7 @@ const Recipe: React.FC<RecipeProps> = (props) => {
                 ></textarea>
                 Instructions: (please separate by commas)
                 <input
-                  id="recipe-instructions"
+                  id="recipe-instructions-input"
                   defaultValue={
                     currentRecipe ? currentRecipe.instructions : newInstructions
                   }

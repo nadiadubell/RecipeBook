@@ -35,20 +35,20 @@ const NewRecipe: React.FC<onAddRecipe> = (props) => {
         </label>
         Title:
         <input
-          id="recipe-title"
+          id="recipe-title-input"
           ref={titleInputRef}
           placeholder="Recipe Title"
           required
         />
         Indgredients (please separate with commas)
         <textarea
-          id="recipe-ingredients"
+          id="recipe-ingredients-input"
           ref={ingredientsInputRef}
           placeholder="ingredient,ingredient,ingredient"
         ></textarea>
         Instructions: (please separate with commas)
         <input
-          id="recipe-instructions"
+          id="recipe-instructions-input"
           ref={instructionsInputRef}
           placeholder="1.ahihodih 2.ashdaohgih 3.ahdihogh"
           required
