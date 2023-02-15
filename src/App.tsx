@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Recipes from "./components/Recipes";
 import NewRecipe from "./components/NewRecipe";
 import { recipeList } from "./Recipe.model";
@@ -6,23 +6,33 @@ import "./App.css";
 
 const App: React.FC = () => {
   const [newRecipes, setNewRecipes] = useState<recipeList[]>(
-    JSON.parse(localStorage.getItem("recipes") || "[]")
+    // JSON.parse(localStorage.getItem("recipes") || "[]")
+    [
+      {
+        id: 0.8789811193145856,
+        title: "Hummus",
+        ingredients:
+          "one 15-ounce can chickpeas (drained and rinsed), 2 cloves garlic (smashed), juice of 1 lemon, sea salt and pepper to taste",
+        instructions:
+          "1.put ingredients in a food processor, 2.blend until smooth, 3.enjoy with your favorite veggies!",
+      },
+    ]
   );
 
   const [newRecipeTitle, setNewRecipeTitle] = useState("");
   const [newRecipeInstructs, setNewRecipeInstructs] = useState("");
   const [newRecipeIngredients, setNewRecipeIngredients] = useState("");
 
-  useEffect(() => {
-    const storedRecipes = localStorage.getItem("recipes");
-    if (storedRecipes) {
-      setNewRecipes(JSON.parse(storedRecipes));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedRecipes = localStorage.getItem("recipes");
+  //   if (storedRecipes) {
+  //     setNewRecipes(JSON.parse(storedRecipes));
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem("recipes", JSON.stringify(newRecipes));
-  }, [newRecipes]);
+  // useEffect(() => {
+  //   localStorage.setItem("recipes", JSON.stringify(newRecipes));
+  // }, [newRecipes]);
 
   const recipeAddHandler = (
     title: string,

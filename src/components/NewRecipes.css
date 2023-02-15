@@ -1,14 +1,21 @@
 #recipe-form {
-  margin-left: 10px;
+  display: flex;
   padding-bottom: 10px;
-  color: darkgray;
+  padding-top: 10px;
+  margin: 0 80px;
+  margin-bottom: 20px;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  background-color: lightslategrey;
 }
 
 #new-recipe {
   display: block;
   font-family: sans-serif;
   margin-bottom: 5px;
-  color: black;
+  color: aliceblue;
+  font-weight: bold;
 }
 
 #recipe-title-input {
@@ -16,7 +23,9 @@
   font-family: sans-serif;
   margin-bottom: 5px;
   padding: 5px;
-  width: 250px;
+  width: 500px;
+  border: none;
+  border-bottom: darkblue solid 2px;
 }
 
 #recipe-ingredients-input {
@@ -24,7 +33,9 @@
   font-family: sans-serif;
   margin-bottom: 5px;
   padding: 5px;
-  width: 250px;
+  width: 500px;
+  border: none;
+  border-bottom: darkblue solid 2px;
 }
 
 #recipe-instructions-input {
@@ -32,7 +43,19 @@
   font-family: sans-serif;
   margin-bottom: 5px;
   padding: 5px;
-  width: 250px;
+  width: 500px;
+  border: none;
+  border-bottom: darkblue solid 2px;
+}
+
+input:focus {
+  outline: none;
+  background-color: aliceblue;
+}
+
+textarea:focus {
+  outline: none;
+  background-color: aliceblue;
 }
 
 #add-recipe {
@@ -48,4 +71,18 @@
   cursor: pointer;
   background-color: skyblue;
   color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  #recipe-form {
+    margin: 0px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  #recipe-title-input,
+  #recipe-ingredients-input,
+  #recipe-instructions-input {
+    width: 90%;
+  }
 }

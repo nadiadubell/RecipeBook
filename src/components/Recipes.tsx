@@ -7,7 +7,6 @@ type ImageMap = {
 
 const imageMap: ImageMap = {
   0.8789811193145856: require("../pics/recipe1.jpg"),
-  0.7722502051511897: require("../pics/recipe2.jpg"),
 };
 
 interface RecipeProps {
@@ -85,7 +84,7 @@ const Recipe: React.FC<RecipeProps> = (props) => {
     setNewIngredients(event.target.value);
   };
 
-  return items ? (
+  return items.length ? (
     <div id="recipes-container">
       {items.map((recipe) => {
         return (
@@ -96,16 +95,16 @@ const Recipe: React.FC<RecipeProps> = (props) => {
               </div>
               <div id="recipe-info-text">
                 <h3 id="recipe-title">{recipe.title}</h3>
-                <div id="recipe-ingredients">
+                <ul id="recipe-ingredients">
                   <h4>Ingredients:</h4>
                   {recipe.ingredients &&
-                    recipe.ingredients.split(",").map((ingredient, index) => (
-                      <ul key={index}>
+                    recipe.ingredients.split(",").map((ingredient) => (
+                      <>
                         <li id="ingredient">{ingredient}</li>
                         <br />
-                      </ul>
+                      </>
                     ))}
-                </div>
+                </ul>
                 <div id="recipe-instructions">
                   {recipe.instructions &&
                     recipe.instructions
