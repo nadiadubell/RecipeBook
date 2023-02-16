@@ -16,6 +16,22 @@ const App: React.FC = () => {
         instructions:
           "1.put ingredients in a food processor, 2.blend until smooth, 3.enjoy with your favorite veggies!",
       },
+      {
+        id: 1.23456789,
+        title: "Avocado Toast",
+        ingredients:
+          "2 slices of bread, 1 ripe avocado, 1/4 teaspoon sea salt, 1/8 teaspoon black pepper, 1/4 teaspoon red pepper flakes",
+        instructions:
+          "1. Toast bread, 2. Cut avocado in half and remove the pit, 3. Mash avocado in a bowl and add salt black pepper and red pepper flakes, 4. Spread the mashed avocado onto the toast, 5. Serve and enjoy!",
+      },
+      {
+        id: 0.6854932190658485,
+        title: "Berry Smoothie",
+        ingredients:
+          "1 cup mixed berries, 1 cup almond milk, 1 banana, 1 tablespoon honey",
+        instructions:
+          "1. Add all ingredients to a blender, 2. Blend until smooth, 3. Pour into a glass and enjoy!",
+      },
     ]
   );
 

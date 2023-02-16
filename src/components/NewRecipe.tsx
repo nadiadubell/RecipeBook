@@ -49,7 +49,7 @@ const NewRecipe: React.FC<onAddRecipe> = (props) => {
       <input
         id="recipe-instructions-input"
         ref={instructionsInputRef}
-        placeholder="1.ahihodih 2.ashdaohgih 3.ahdihogh"
+        placeholder="1.instruction, 2.instruction, 3.instruction"
         required
       />
       <button id="add-recipe" type="submit">

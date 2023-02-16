@@ -7,6 +7,8 @@ type ImageMap = {
 
 const imageMap: ImageMap = {
   0.8789811193145856: require("../pics/recipe1.jpg"),
+  1.23456789: require("../pics/recipe2.jpg"),
+  0.6854932190658485: require("../pics/recipe3.jpg"),
 };
 
 interface RecipeProps {
